@@ -3,10 +3,10 @@
 % (u)pLaTeX非互換パッケージに対して互換させるパッチを読み込む命令
 % \RequirePackage{plautopatch}
 
-% 2カラム,A4,フォントサイズ9pt
+% 2カラム,A4,フォントサイズ12pt
 \LoadClass[
     paper=a4,
-    fontsize=11pt,
+    fontsize=12pt,
     disablejfam,
     head_space=25mm,
     foot_space=25mm,
