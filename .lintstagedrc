@@ -1,5 +1,5 @@
 {
-  "*.{tex}": [
-    "textlint --fix"
+  "*.tex": [
+    "npm run lint"
   ]
 }

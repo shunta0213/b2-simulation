@@ -16,18 +16,30 @@
             "no-invalid-control-character": true,
             "no-unmatched-pair": true,
             "sentence-length": {
-                "max": 120
+                "max": 300
+            },
+            "max-kanji-continuous-len": {
+                "max": 6,
+                "allow": [
+                    "慶應義塾大学理工学部物理情報工学科"
+                ]
             },
             "no-nfd": true,
             "no-doubled-joshi": {
                 "min_interval": 1,
                 "strict": false,
-                "allow": ["も", "や", "にも"],
+                "allow": [
+                    "も",
+                    "や",
+                    "にも"
+                ],
                 "separatorCharacters": [
-                    "．", "。"
+                    "．",
+                    "。"
                 ],
                 "commaCharacters": [
-                    "、", "，"
+                    "、",
+                    "，"
                 ]
             },
             "no-doubled-conjunction": true,
