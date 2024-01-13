@@ -12,7 +12,7 @@ LBMは空間をカーテシアン格子状に分割し，各格子に$f_i$で表
 この$f_i$が全て隣の格子に移動したのち，衝突や流体の流れを計算し，再び$f_i$を移動させることを繰り返すことで，流体の流れを計算する．
 
 位置$\bm{x}$，時間$t$において，ある格子は隣接する格子からの流入を受ける．この時，隣接する格子は$\bm{x}-\bm{e}_i$と表さえる．
-ここで，$\bm{e}_i$は後に定義するベクトルである．
+ここで，$\bm{e}_i$は後に\ref{sec:lbm-velocity-set}で定義するベクトルである．
 流れ込むDDFsは，
 \begin{equation}\label{eq:streaming}
     \ftemp(\bm{x}, t)=f_{i}(\bm{x}-\bm{e}_i, t).
@@ -28,11 +28,12 @@ LBMは空間をカーテシアン格子状に分割し，各格子に$f_i$で表
 \begin{equation}\label{eq:equil-ddf}
     \feq(\rho(\bm{x}, t), \bm{u}(\bm{x}, t)) = w_i \rho(\bm{x}, t) \left(1 + \frac{\bm{e}_i \cdot \bm{u}(\bm{x}, t)}{c_s^2} + \frac{(\bm{e}_i \cdot \bm{u}(\bm{x}, t))^2}{2c_s^4} - \frac{\bm{u}(\bm{x}, t)^2}{2c_s^2} \right)
 \end{equation}
-ただし，$w_i$は重みであり後に$c_i$とともに定義する．また，$c_s$は格子の音速である．
+ただし，$w_i$は重みであり後に$c_i$とともに\ref{sec:lbm-velocity-set}で定義する．また，$c_s$は格子の音速である．
 最後に，$\feq$と$\ftemp$，これらから計算される衝突作用素$\Omega$を用いて，$\Delta t$時間後のDDFsを計算する．
 \begin{equation}\label{eq:next-ddf}
     f_i(\bm{x}, t+\Delta t) = \ftemp(\bm{x}, t) - \Omega
 \end{equation}
+$\Omega$は具体的に\ref{sec:lbm-collision}で説明する．
 これを繰り返すことで，流体の流れを計算する．
 
 \subsection{初期条件}
@@ -43,7 +44,7 @@ LBMは空間をカーテシアン格子状に分割し，各格子に$f_i$で表
 \end{equation}
 とすることで与えられる．
 
-\subsection{速度セット velocity set}
+\subsection{速度セット velocity set}\label{sec:lbm-velocity-set}
 $\bm{e}_i$と，$w_i$の定義は以下の通りである．
 これらはVelocity Setsと呼ばれ，一般に$d$を次元，$q$を速度の方向として$DdQq$として表される．
 よく使われるものは，$D2Q9$，$D3Q15$，$D3Q13$，$D3Q19$，$D3Q27$である．
@@ -76,23 +77,23 @@ $\bm{e}_i$と，$w_i$の定義は以下の通りである．
     \Omega_i = \frac{\Delta t}{\tau} \left( \feq - \ftemp \right)
 \end{equation}
 
-\subsection{衝突について}
+\subsection{衝突について}\label{sec:lbm-collision}
 LBMにおいて境界はEquilibrium Boundaries, Moving Bounce-back Boundaries, Non-moving Bounce-back Boundariesの3種類に分類される．
-Equilibrium Boundariesの場合は，その境界を常に並行状態にあるとする。
+Equilibrium Boundariesの場合は，その境界を常に並行状態にあるとする．
 \begin{equation}
     f_i(\bm{x}, t+\Delta t) =
     \begin{dcases}
-        \ftemp(\bm{x}, t) - \Omega_i & \text{if $\bm{x}$ is a regular lattice point} \\
-        \feq(\rho_o, \bm{u}_0)            & \text{if $\bm{x}$ is a equilibrium boundary lattice point}
+        \ftemp(\bm{x}, t) - \Omega_i & \text{if $\bm{x}$ is a regular lattice point}              \\
+        \feq(\rho_o, \bm{u}_0)       & \text{if $\bm{x}$ is a equilibrium boundary lattice point}
     \end{dcases}
 \end{equation}
 Non-moving Bounce-Back Boundariesの場合は，その境界における流れは反射するとする．
 \begin{equation}
-  f_{\text{temp}}(\vec{x}, t) := 
-\begin{dcases}
-    f_A(\vec{x} - \vec{e}_i, t) & \text{if } (\vec{x} - \vec{e}_i) \text{ is a wall lattice point} \\
-    f_iA(\vec{x}, t) & \text{otherwise}
-\end{dcases}
+    f_{\text{temp}}(\vec{x}, t) :=
+    \begin{dcases}
+        f_A(\vec{x} - \vec{e}_i, t) & \text{if } (\vec{x} - \vec{e}_i) \text{ is a wall lattice point} \\
+        f_iA(\vec{x}, t)            & \text{otherwise}
+    \end{dcases}
 \end{equation}
 
 LBMの境界における衝突については，momentum exhange algorithm(運動量交換アルゴリズム)を用いて計算される．
