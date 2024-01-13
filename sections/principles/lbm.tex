@@ -78,21 +78,21 @@ $\bm{e}_i$と，$w_i$の定義は以下の通りである．
 
 \subsection{衝突について}
 LBMにおいて境界はEquilibrium Boundaries, Moving Bounce-back Boundaries, Non-moving Bounce-back Boundariesの3種類に分類される．
-Equilibrium Boundariesの場合は，その境界を常に並行状態にあるとする。
+Equilibrium Boundariesの場合は，その境界を常に並行状態にあるとする．
 \begin{equation}
     f_i(\bm{x}, t+\Delta t) =
     \begin{dcases}
-        \ftemp(\bm{x}, t) - \Omega_i & \text{if $\bm{x}$ is a regular lattice point} \\
-        \feq(\rho_o, \bm{u}_0)            & \text{if $\bm{x}$ is a equilibrium boundary lattice point}
+        \ftemp(\bm{x}, t) - \Omega_i & \text{if $\bm{x}$ is a regular lattice point}              \\
+        \feq(\rho_o, \bm{u}_0)       & \text{if $\bm{x}$ is a equilibrium boundary lattice point}
     \end{dcases}
 \end{equation}
 Non-moving Bounce-Back Boundariesの場合は，その境界における流れは反射するとする．
 \begin{equation}
-  f_{\text{temp}}(\vec{x}, t) := 
-\begin{dcases}
-    f_A(\vec{x} - \vec{e}_i, t) & \text{if } (\vec{x} - \vec{e}_i) \text{ is a wall lattice point} \\
-    f_iA(\vec{x}, t) & \text{otherwise}
-\end{dcases}
+    f_{\text{temp}}(\vec{x}, t) :=
+    \begin{dcases}
+        f_A(\vec{x} - \vec{e}_i, t) & \text{if } (\vec{x} - \vec{e}_i) \text{ is a wall lattice point} \\
+        f_iA(\vec{x}, t)            & \text{otherwise}
+    \end{dcases}
 \end{equation}
 
 LBMの境界における衝突については，momentum exhange algorithm(運動量交換アルゴリズム)を用いて計算される．
