@@ -25,23 +25,7 @@
                 ]
             },
             "no-nfd": true,
-            "no-doubled-joshi": {
-                "min_interval": 1,
-                "strict": false,
-                "allow": [
-                    "も",
-                    "や",
-                    "にも"
-                ],
-                "separatorCharacters": [
-                    "．",
-                    "。"
-                ],
-                "commaCharacters": [
-                    "、",
-                    "，"
-                ]
-            },
+            "no-doubled-joshi": false,
             "no-doubled-conjunction": true,
             "no-doubled-conjunctive-particle-ga": true,
             "no-dropping-the-ra": true,
