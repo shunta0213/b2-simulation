@@ -3,7 +3,8 @@
     "scripts": {
         "lint": "textlint */*.tex",
         "fix": "textlint --fix */*.tex",
-        "lint-style": "textlint -f checkstyle */*.tex"
+        "lint-style": "textlint -f checkstyle */*.tex",
+        "prepare": "husky install"
     },
     "dependencies": {
         "textlint": "^13.4.1",
@@ -11,5 +12,9 @@
         "textlint-filter-rule-comments": "^1.2.2",
         "textlint-plugin-latex2e": "^1.2.1",
         "textlint-rule-preset-ja-technical-writing": "^9.0.0"
+    },
+    "devDependencies": {
+        "husky": "^8.0.0",
+        "lint-staged": "^15.2.0"
     }
 }

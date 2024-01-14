@@ -2,7 +2,91 @@
 \documentclass[main]{subfiles}
 
 \begin{document}
-\chapter{結果}
+\chapter{結果・考察}
 
+以下に設定すべき変数を示す．
+\begin{table}[ht]
+    \centering
+    \caption{シミュレーションに使用する変数}
+    \begin{tabular}{ll}
+        \toprule
+        変数       & 意味         \\
+        \midrule
+        $T$      & シミュレーション時間 \\
+        $u$      & 流体の初期速度    \\
+        $length$ & 物体の長さ      \\
+        $width$  & 物体の幅       \\
+        $\nu$    & 動せん断粘度     \\
+        $\rho$   & 密度         \\
+        \bottomrule
+    \end{tabular}%
+    \label{tab:result-variables}%
+\end{table}
+
+以下特に指定しない限り，
+$\nu=\SI{1.48E-5}{\square\meter\per\second}$，
+$\rho=\SI{1.225}{\kilogram\per\cubic\meter}$とする．
+\footnote{
+    実際，シミュレーションではLBM単位系を用いる．
+    FluidX3Dでは，SI単位系とLBM単位系とで変換を行う関数が用意されているため，SI単位系で設定をすれば十分．
+}
+
+次に，実験をしたモデルを示す．
+
+\begin{itemize}
+    \item Formula1 Mercedes W14 \footnote{https://downloadfree3d.com/3d-models/vehicles/sports-car/mercedes-f1-w14/}
+    \item Space Shuttle \footnote{https://www.thingiverse.com/thing:4975964/files}
+    \item Ahmed Bluff Body \footnote{https://github.com/nathanrooy/ahmed-bluff-body-cfd}
+\end{itemize}
+
+\clearpage
+\section{物体の周りの気流の流れの可視化}
+\subsection{Formula1 Mercedes W14}
+\input{sections/result/f1car.tex}
+\subsection{Space Shuttle}
+\input{sections/result/spaceshuttle.tex}
+
+\subsection{考察}
+気流が物体に当たった場所から後方に流れていくにつれてその点を中心に円錐状に広がっていることがわかり，
+それらが重なり合って渦が発生しているように見える．
+これは原理で述べたように，
+LBMでは各格子から後方に行くにつれて隣接する格子にそれぞれ速度や衝突による影響が伝播していくためであると考えられる．
+
+また，F1ではフロントウィングで抵抗がそこまで大きくなく，
+それより後方のフロントウィングや後方のリアウィングでの抵抗が大きく赤い部分が見て取れる．
+同様にスペースシャトルでも先端部分よりも後方の羽の付け根の部分で抵抗が大きくなっている．
+このことから，先端部分では気流を乱さず後方に流し，できる限り後方での抵抗を小さくするように設計されているのではと推察できる．
+\footnote{
+    しばしば，F1ではフロントウィングはこのような点，すなわち
+    ボディの下を通してディヒューザーに流す，ボディの上部からエンジンへ流す，リアウィングへあてる，など
+    様々なパーツへと気流を流すために，極めて重要な部品であると言われている．
+}
+
+\clearpage
+
+\section{Ahmed Blluff Body}
+\input{sections/result/ahmed.tex}
+\subsection{考察}
+$Cd$の値は，図\ref{fig:ahmed-cd-t}から，
+\SI{0.1}{\second}以降は\SI{0.63}{}から\SI{0.66}{}の間で推移している．
+この値は，表\ref{tab:ahmed-cd-cl}の値と比較すると，約\SI{2}{}倍程度大きい．
+このことから，FluidX3Dのシミュレーションでは実際の値よりも抵抗が大きくなっており，
+その原因として考えられることは，衝突による計算アルゴリズムが適当ではないということがある．
+
+また，図\ref{fig:ahmed-cd-t-lim}より，\SI{0.1}{\second}以降$Cd$が周期的に振動しているように見える．
+そこで，\SI{0.1}{\second}以降の$Cd$の値を取り出し，Fourier解析をした．
+サンプリング周期を\SI{0.001}{\second}，サンプル数を\SI{250}としてFFTを実行すると，振幅スペクトルは
+図\ref{fig:ahmed-cd-fft}のようになった．
+\SI{4}{\Hz}の振幅がもっとも大きく，その値は\SI{0.09}{}である．
+これは$Cd$の時間変化が\SI{0.15}{\second}の間のみであるから，特に意味のない値であると考えらえる．
+その次に大きい値は，\SI{12.5}{\Hz}であり，そのときの振幅は\SI{0.047}{}である．
+このとき，周期が\SI{0.08}{\second}で周期性があると考えられる．
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/ahmed/cd-fourier-amplitude.png}
+    \caption{AhmedBluffBodyの$Cd$の振幅スペクトル}\label{fig:ahmed-cd-fft}
+\end{figure}
 
 \end{document}

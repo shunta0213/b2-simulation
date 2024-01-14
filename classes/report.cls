@@ -42,6 +42,7 @@
 \usepackage{type1cm} % 文字の大きさを自由に変えるためのパッケージ
 \usepackage{tikz} % 図を描くためのパッケージ
 \usepackage{lscape} % 用紙を横向きにするためのパッケージ
+\usepackage{booktabs} % 表の罫線を太くするためのパッケージ
 
 \ifptex
     \ifnativeuptex

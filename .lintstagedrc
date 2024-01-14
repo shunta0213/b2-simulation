@@ -1,0 +1,5 @@
+{
+  "*.tex": [
+    "npm run lint"
+  ]
+}
