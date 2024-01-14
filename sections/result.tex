@@ -2,9 +2,38 @@
 \documentclass[main]{subfiles}
 
 \begin{document}
-\chapter{結果}
+\chapter{結果・考察}
 
-以下に実験をしたモデルを示す．
+\section{結果}
+
+以下に設定すべき変数を示す．
+\begin{table}[ht]
+    \centering
+    \caption{シミュレーションに使用する変数}
+    \begin{tabular}{ll}
+        \toprule
+        変数       & 意味         \\
+        \midrule
+        $T$      & シミュレーション時間 \\
+        $u$      & 流体の初期速度    \\
+        $length$ & 物体の長さ      \\
+        $width$  & 物体の幅       \\
+        $\nu$    & 動せん断粘度     \\
+        $\rho$   & 密度         \\
+        \bottomrule
+    \end{tabular}%
+    \label{tab:result-variables}%
+\end{table}
+
+以下特に指定しない限り，
+$\nu=\SI{1.48E-5}{\square\meter\per\second}$，
+$\rho=\SI{1.225}{\kilogram\per\cubic\meter}$とする．
+\footnote{
+    実際，シミュレーションではLBM単位系を用いる．
+    FluidX3Dでは，SI単位系とLBM単位系とで変換を行う関数が用意されているため，SI単位系で設定をすれば十分．
+}
+
+次に，実験をしたモデルを示す．
 
 \begin{itemize}
     \item Formula1 Mercedes W14 \footnote{https://downloadfree3d.com/3d-models/vehicles/sports-car/mercedes-f1-w14/}
@@ -12,5 +41,15 @@
     \item Ahmed Bluff Body \footnote{https://github.com/nathanrooy/ahmed-bluff-body-cfd}
 \end{itemize}
 
+\clearpage
+\subsection{Formula1 mercedes W14}
+\input{sections/result/f1car.tex}
+\input{sections/result/spaceshuttle.tex}
+\subsection{Ahmed Blluff Body}
+\input{sections/result/ahmed.tex}
+
+\clearpage
+
+\section{考察}
 
 \end{document}

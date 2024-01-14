@@ -14,7 +14,7 @@
     "rules": {
         "preset-ja-technical-writing": {
             "no-invalid-control-character": true,
-            "no-unmatched-pair": true,
+            "no-unmatched-pair": false,
             "sentence-length": {
                 "max": 300
             },
